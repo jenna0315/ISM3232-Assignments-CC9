@@ -21,3 +21,27 @@ class Book {
         } else {console.log("Invalid status. Must be true or false.");}
     };
 }
+
+//Task 2: Create Section class to manage books and availability
+class Section {
+    constructor(name,books) {
+    this.name = name //The name of the section (e.g., “Fiction”, “Science”)
+    this.books = [] //array of Book objects
+}
+addBook(book){
+    this.books.push(book)
+    }; //Adds a Book object to the books array.
+    getAvailableBooks() {
+        return this.books.reduce((total,book)=>
+        total + book,0) //Returns the total number of available books in the section
+    };
+    listBooks() {
+        return this.books.map(book=>{
+            return {
+                title: book.title,
+                available: book.isAvailable ? "Available" : "Borrowed"
+            };
+        });
+    }
+}
+    
