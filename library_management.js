@@ -37,8 +37,8 @@ addBook(book){
     listBooks() {
         return this.books.map(book=>{
             return {
-                title: book.title,
-                available: book.isAvailable ? "Available" : "Borrowed"
+                Title: book.title,
+                Availability: book.isAvailable ? "Available" : "Borrowed"
             };
         });
     }
@@ -66,7 +66,7 @@ class Patron {
             }
         }
         returnBook(book) {
-        const borrowedBook = this.borrowBook.find(b=>b===book);
+        const borrowedBook = this.borrowedBooks.find(b=>b===book);
         if (borrowedBook) {
             borrowedBook.isAvailable = true;
             this.borrowedBooks = this.borrowedBooks.filter(b => b !== book);
@@ -87,7 +87,7 @@ class VIPPatron extends Patron {
     borrowBook(book) {
         if (book.isAvailable) {
             book.isAvailable = false; 
-            this.borrowedBooks.set(book.title, book); 
+            this.borrowedBooks.push(book); 
             console.log(`${this.name} VIP borrowed ${book.title}`);
         } else {
             console.log(`Sorry! ${book.title} is not available at this time.`);
@@ -96,3 +96,45 @@ class VIPPatron extends Patron {
 }
 
 //Task 5: Calculate total available books in the section
+
+//Task 6: Create and Manage Sections and Patrons
+//Create sections
+const fictionSection = new Section("Fiction");
+const scienceSection = new Section("Science");
+
+//Create books
+const book1 = new Book("Pride and Prejudice", "Jane Austen", "123456789");
+const book2 = new Book("The Catcher in the Rye", "J.D. Salinger", "234567891");
+const book3 = new Book("A Brief History of Time", "Stephen Hawking", "345678912");
+const book4 = new Book("The Selfish Gene", "Richard Dawkins", "456789123");
+
+//Add books to sections
+fictionSection.addBook(book1);
+fictionSection.addBook(book2);
+scienceSection.addBook(book3);
+scienceSection.addBook(book4);
+
+//Create patrons
+const regularPatron = new Patron("Bob");
+const vipPatron = new VIPPatron("Alice");
+
+//List books in each section
+console.log("Books in Fiction Section:", fictionSection.listBooks());
+console.log("Books in Science Section:", scienceSection.listBooks());
+
+//Patrons borrow books
+regularPatron.borrowBook(book1); 
+vipPatron.borrowBook(book1); 
+vipPatron.borrowBook(book3); 
+
+//Calculate available books in each section
+console.log(`Total available books in ${fictionSection.name}: ${fictionSection.calculateTotalBooksAvailable()}`); 
+console.log(`Total available books in ${scienceSection.name}: ${scienceSection.calculateTotalBooksAvailable()}`); 
+
+//Patrons return books
+regularPatron.returnBook(book1); 
+vipPatron.returnBook(book3); 
+
+//Calculate available books in each section
+console.log(`Total available books in ${fictionSection.name}: ${fictionSection.calculateTotalBooksAvailable()}`); 
+console.log(`Total available books in ${scienceSection.name}: ${scienceSection.calculateTotalBooksAvailable()}`); 
