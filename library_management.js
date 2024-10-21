@@ -44,4 +44,30 @@ addBook(book){
         });
     }
 }
-    
+
+//Task 3: Create a Patron Class
+class Patron {
+    constructor(name) {
+        this.name = name; 
+        this.borrowedBooks = [];}
+
+        borrowBook(book) {
+        if (book.isAvailable) {
+                book.isAvailable = false; // Update the book's status 
+                this.borrowedBooks.push(book); 
+                console.log(`${this.name} borrowed ${book.title}`);
+            } else {
+                console.log(`Sorry, "${book.title}" is not available.`);
+            }
+        }
+        returnBook(book) {
+        const borrowedBook = this.borrowBook.find(b=>b===book);
+        if (borrowedBook) {
+            borrowedBook.isAvailable = true;
+            this.borrowedBooks = this.borrowedBooks.filter(b => b !== book);
+            console.log(`${this.name} returned ${book.title}`);}
+    else {
+        console.log(`${book.title} is not in the list of borrowed books`);
+    };
+};
+}
