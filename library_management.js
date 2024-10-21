@@ -32,9 +32,8 @@ addBook(book){
     this.books.push(book)
     }; //Adds a Book object to the books array.
     getAvailableBooks() {
-        return this.books.reduce((total,book)=>
-        total + book,0) //Returns the total number of available books in the section
-    };
+        return this.books.filter(book => book.isAvailable).length; 
+    }
     listBooks() {
         return this.books.map(book=>{
             return {
@@ -43,6 +42,12 @@ addBook(book){
             };
         });
     }
+    //Task 5: calculateTotalBooksAvailable
+    calculateTotalBooksAvailable() {
+        return this.books.reduce((total, book) => {
+            return total + (book.isAvailable ? 1 : 0);
+        }, 0);
+}
 }
 
 //Task 3: Create a Patron Class
@@ -89,3 +94,5 @@ class VIPPatron extends Patron {
         }
     }
 }
+
+//Task 5: Calculate total available books in the section
